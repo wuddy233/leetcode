@@ -1,0 +1,17 @@
+class Solution {
+    public boolean wordBreak(String s, List<String> wordDict) {
+        //可以重复选取，完全背包问题，用排列数和组合数的方法都可以
+        //dp[i],字符串长度为i的话，dp[i]为true，表示可以由字典中的单词拼接而成
+        boolean[] dp = new boolean[s.length() + 1];
+        dp[0] = true;
+        for(int i = 1; i <= s.length(); i++) {//背包
+            for(int j = 0; j < i; j++) {
+                //如果确定dp[j] 是true，且 [j, i] 这个区间的子串出现在字典里，那么dp[i]一定是true。（j < i ）
+                if(wordDict.contains(s.substring(j, i)) && dp[j]) {
+                    dp[i] = true;
+                }
+            }
+        }
+        return dp[s.length()];
+    }
+}
