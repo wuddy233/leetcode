@@ -1,0 +1,18 @@
+class Solution {
+    public int rob(TreeNode root) {
+        int[] res = robAction(root);
+        return Math.max(res[0], res[1]);
+    }
+
+    public int[] robAction(TreeNode root) {
+        //下标为0记录不偷该节点所得到的的最大金钱，下标为1记录偷该节点...
+        int[] res = new int[2];
+        if(root == null) return res;
+        int[] left = robAction(root.left);
+        int[] right = robAction(root.right);
+        //左孩子不偷或者偷的最大值加上右孩子偷或者不偷的最大值
+        res[0] = Math.max(left[1], left[0]) + Math.max(right[1], right[0]);
+        res[1] = left[0] + right[0] + root.val;
+        return res;
+    }
+}
