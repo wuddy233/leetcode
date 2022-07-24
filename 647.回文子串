@@ -1,0 +1,32 @@
+class Solution {
+    public int countSubstrings(String s) {
+        //dp[i][j]表示在i，j范围是否为回文区间
+        int len = s.length();
+        int res = 0;
+        boolean[][] dp = new boolean[len][len];
+        //下标i和下标j不相同，false
+        //相同，情况1：i=j， true，此时就一个字符
+        //情况2:j - i = 1，true，比如aa
+        //情况3:j - i >= 2,此时就看缩小后的闭区间是否为回文子串，状态转移
+        //遍历顺序是自下而上，从左到右
+        for(int j = 0; j < len; j++) {
+            for(int i = 0; i <= j; i++) {
+                if(s.charAt(i) == s.charAt(j)) {
+                    if(i == j) {
+                        res++;
+                        dp[i][j] = true;
+                    } else if(j - i == 1) {
+                        res++;
+                        dp[i][j] = true;
+                    } else if(dp[i + 1][j - 1]) {
+                        res++;
+                        dp[i][j] = true;
+                    } else {
+                        dp[i][j] = false;
+                    }
+                }
+            }
+        }
+        return res;
+    }
+}
